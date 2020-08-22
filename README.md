@@ -2,6 +2,6 @@
 
 | Method        | Accuracy      | Time  |
 | ------------- |:-------------:| -----:|
-|   Sk Ridge    | 0.86          |       |
+|   scikit-learn Ridge    | 0.86          |       |
 |   CatBoostClassifier    |      |    |
 
