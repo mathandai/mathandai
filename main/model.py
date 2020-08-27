@@ -10,6 +10,9 @@ class Mathai():
 	def __init__(self):
 		pass
 
+	def hyperopt(self):
+		pass
+
 	def fitpredict(self, X, y):		
 		# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 		X_train, X_test, y_train, y_test = preprocessing(X, y)
