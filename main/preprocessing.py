@@ -19,26 +19,34 @@ def scale(X):
 # использовать эту функцию для проверки scale с использованием numpy
 # значения почти похожи, после запятой сходится несколько знаков
 def scale(X):
-	scaler = StandardScaler()
-	return scaler.fit_transform(X)
+    scaler = StandardScaler()
+    return scaler.fit_transform(X)
 '''
 
 
-def fillna(X):
-	pass
+def fillna(X, inds, i):
+    if i == 'mean':
+        col_mean = np.nanmean(X, axis=0)
+        X[inds] = np.take(col_mean, inds[1])
+        return X
+    elif i == 'zero':
+        X[inds] = 0
+        return X
+    else:
+        raise ValueError('Error')
 
 
 def cat_one_hot(X, cat_features):
-	pass
+    pass
 
 
-def tt_split(X, y, test_size, rs=42):  # return X_train, X_test, y_train, y_test
-	# избавиться от скилерновской функции, написать свою
-	return train_test_split(X, y, test_size=test_size, random_state=rs)
+def tt_split(X, y, test_size=0.3, rs=42):  # return X_train, X_test, y_train, y_test
+    # избавиться от скилерновской функции, написать свою
+    return train_test_split(X, y, test_size=test_size, random_state=rs)
 
 
 def preprocessing(X, y, test_size=0.3, rs=42):
-	# Return Pearson product-moment correlation coefficients.
+    # Return Pearson product-moment correlation coefficients.
     pir_matrix = pirson(X, y)
 
     # drop_feature_y здесь находятся индексы признаков, которые коррелируют с таргетом
