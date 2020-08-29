@@ -1,6 +1,6 @@
 import numpy as np
 
 
-class Add:
+class Fullsearch:
     def __init__(self):
         pass
