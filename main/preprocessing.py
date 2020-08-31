@@ -15,6 +15,11 @@ def scale(X):
     return (X - np.mean(X)) / np.std(X)
 
 
+def task(y):
+    if True:
+        return 'Classification'
+    return 'Regression'
+
 '''
 # использовать эту функцию для проверки scale с использованием numpy
 # значения почти похожи, после запятой сходится несколько знаков
