@@ -5,13 +5,13 @@ import copy
 
 
 class Add_Del:
-    def __init__(self, estimator=LinearRegression(), d_add=2, d_dell=1):
+    def __init__(self, estimator=LinearRegression(), d_add=2, d_del=1):
         # определяем модель по которой отбираем признаки
         self.estimator = estimator
 
         # определяем сколько добавлять и удалять признков в 1 итерации
         self.d_add = d_add
-        self.d_dell = d_dell
+        self.d_dell = d_del
 
     def calcul_Q(self, subset_features):
         self.estimator.fit(self.X_train[:, subset_features], self.y_train)
