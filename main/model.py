@@ -1,8 +1,10 @@
 import numpy as np
+from params import params
 from preprocessing import fillna, tt_split, scale, task
 
 from sklearn.metrics import accuracy_score
-from sklearn.linear_model import RidgeClassifier
+from sklearn.linear_model import RidgeClassifier, LogisticRegression
+from sklearn.svm import LinearSVC
 from sklearn.model_selection import GridSearchCV
 
 
@@ -16,7 +18,7 @@ class Mathai:
 	def fitpredict(self, X, y):
 		# print(X)
 		type_task = task(y)
-		param_models = {'Classification':{'SVM':{}, 'Linear'}, 'Regression':{}}
+		param_models = {'Classification':{'SVM':{}, 'Linear':{}}, 'Regression':{}}
 		if np.isnan(X).any():
 			inds = np.where(np.isnan(X))
 			print(inds)
@@ -29,8 +31,8 @@ class Mathai:
 				print(X_train, y_train)
 				print(X_test, y_test)
 				# X_train, X_test, y_train, y_test = preprocessing(X, y)
-				svc = svm.SVC()
-				mod = param_models[type_task][]
+				#svc = svm.SVC()
+				mod = param_models[type_task]
 				par = param_models[type_task]
 				clf = GridSearchCV(mod, par)
 				#clf = RidgeClassifier().fit(X_train, y_train)
