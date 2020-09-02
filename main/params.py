@@ -59,6 +59,11 @@ params = {"Classification": {"LinearSVC":
             'params': {'C' : [0.01, 0.1, 1],
                        'loss' : ['epsilon_insensitive', 'squared_epsilon_insensitive']
                        }
+        },
+    'LinearRegression':
+        {
+            'estimator': LinearSVR(),
+            'params': {'n_jobs=-1' : -1}
         }
     }
 }
