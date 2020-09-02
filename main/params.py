@@ -1,5 +1,6 @@
 from sklearn.linear_model import RidgeClassifier, LogisticRegression, SGDClassifier
-from sklearn.svm import LinearSVC
+from sklearn.linear_model import Ridge, SGDRegressor, ElasticNet
+from sklearn.svm import LinearSVC, LinearSVR
 
 random_state = 42
 params = {"Classification": {"LinearSVC":
@@ -33,5 +34,31 @@ params = {"Classification": {"LinearSVC":
                        }
         }
 },
-    "Regression": {}
+    "Regression": { 'Ridge':
+    {
+        'estimator': Ridge(),
+        'params': {'alpha':[0.01, 0.1, 0.5, 1]}
+    },
+
+    'SGDRegressor':
+        {
+            'estimator': SGDRegressor(),
+            'params': {'penalty' :['l2', 'l1', 'elasticnet'],
+                             'alpha' : [0.0001, 0.001, 0.01, 0.1, 0.5, 1],
+                             'eta0' : [0.001, 0.01, 0.05, 0.1]
+                       }
+        },
+    'ElasticNet':
+        {
+            'estimator': ElasticNet(),
+            'params': {'alpha' : [0.0001, 0.001, 0.01, 0.1, 0.5, 1]}
+        },
+    'LinearSVR':
+        {
+            'estimator': LinearSVR(),
+            'params': {'C' : [0.01, 0.1, 1],
+                       'loss' : ['epsilon_insensitive', 'squared_epsilon_insensitive']
+                       }
+        }
+    }
 }
