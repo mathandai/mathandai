@@ -1,5 +1,5 @@
 from sklearn.linear_model import RidgeClassifier, LogisticRegression, SGDClassifier
-from sklearn.linear_model import Ridge, SGDRegressor, ElasticNet
+from sklearn.linear_model import Ridge, SGDRegressor, ElasticNet, LinearRegression
 from sklearn.svm import LinearSVC, LinearSVR
 
 random_state = 42
