@@ -63,7 +63,7 @@ params = {"Classification": {"LinearSVC":
     'LinearRegression':
         {
             'estimator': LinearRegression(),
-            'params': {'n_jobs=-1' : -1}
+            'params': {'n_jobs': -1}
         }
     }
 }
