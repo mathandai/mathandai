@@ -166,9 +166,6 @@ class Full_search:
             self.Q_best = 1e12
             self.best_sub_features = []
 
-            sub_features = []
-            history_Q = []
-
             print(self.estimator)
 
             full_list = [i for i in range(X_train.shape[1])]
