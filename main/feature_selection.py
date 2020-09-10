@@ -2,9 +2,13 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from params import params
 import copy
+from itertools import combinations
 
 
 class Add_Del:
+    '''Реализация метода отбора признаков Add-del.
+    При параметре d_add = 0 алгоритм реализует метод Del.
+    При параметре d_del = 0 алгоритм реализует метод Add'''
     def __init__(self, estimator_list=['SGDRegressor'], d_add=2, d_del=1):
         # определяем модель по которой отбираем признаки
         self.estimator_list = estimator_list
@@ -14,7 +18,7 @@ class Add_Del:
         self.d_del = d_del
 
         # Cловарь {estimator : [Наименьшая ошибка, список признаков на которой достигается эта ошибке]}
-        self.Result_dict = {}
+        self.result_dict = {}
 
     def calcul_Q(self, subset_features):
         self.estimator.fit(self.X_train[:, subset_features], self.y_train)
@@ -114,7 +118,7 @@ class Add_Del:
                             break
 
                 if set(self.best_sub_features) == set(local_best_sub_features):
-                    self.Result_dict[estim] = [self.Q_best, self.best_sub_features]
+                    self.result_dict[estim] = [self.Q_best, self.best_sub_features]
                     break
 
                 if self.Q_best > local_Q_best:
@@ -123,5 +127,63 @@ class Add_Del:
 
                 # Вернем значение наименьшей ошибки и список признаков на котором она достигается
                 else:
-                    self.Result_dict[estim] = [self.Q_best, self.best_sub_features]
+                    self.result_dict[estim] = [self.Q_best, self.best_sub_features]
                     break
+
+
+class Full_search:
+
+    '''Реализация отбора признака полным перебором комбинаций признаков.'''
+
+    def __init__(self, estimator_list=['SGDRegressor']):
+        # определяем модель по которой отбираем признаки
+        self.estimator_list = estimator_list
+
+        # Cловарь {estimator : [Наименьшая ошибка, список признаков на которой достигается эта ошибке]}
+        self.result_dict = {}
+
+    def calcul_Q(self, subset_features):
+        self.estimator.fit(self.X_train[:, subset_features], self.y_train)
+        Y_pred = self.estimator.predict(self.X_test[:, subset_features])
+        if self.task == 'Regression':
+            return np.square(np.subtract(self.y_test, Y_pred)).mean()
+        else:
+            pass
+
+    def fit(self, X_train, X_test, y_train, y_test, task='Regression'):
+
+        self.X_train = X_train
+        self.X_test = X_test
+        self.y_train = y_train
+        self.y_test = y_test
+
+        self.task = task
+        self.dim = X_train.shape[1]
+
+        for estim in self.estimator_list:
+            self.estimator = params[self.task][estim]['estimator']
+
+            self.Q_best = 1e12
+            self.best_sub_features = []
+
+            sub_features = []
+            history_Q = []
+
+            print(self.estimator)
+
+            full_list = [i for i in range(X_train.shape[1])]
+
+            for i in range(1, X_train.shape[1] + 1):
+                for sub_features in combinations(full_list, i):
+
+                    now_Q = self.calcul_Q(sub_features)
+                    print(t, sub_features, now_Q)
+
+                    if self.Q_best > now_Q:
+                        self.Q_best = now_Q
+                        self.best_sub_features = copy.deepcopy(sub_features)
+
+            # Вернем значение наименьшей ошибки и список признаков на котором она достигается
+
+            self.result_dict[estim] = [self.Q_best, self.best_sub_features]
+
