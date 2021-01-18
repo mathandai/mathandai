@@ -1,3 +1,9 @@
+import random
+import numpy as np
+from sklearn.model_selection import train_test_split
+from params import params
+import copy
+
 class Genetic:
     def __init__(self, select="", crossover="", mutate="", len_of_individual=100,
                  size_of_population=200, max_generations=100, elite_size=10,
@@ -14,9 +20,8 @@ class Genetic:
         self.estimator.fit(self.X_train[:, subset_features], self.y_train)
         Y_pred = self.estimator.predict(self.X_test[:, subset_features])
         if self.task == 'Regression':
-            # return np.square(np.subtract(self.y_test, Y_pred)).mean()
+             return (np.square(np.subtract(self.y_test, Y_pred)).mean()) ** 1/2
             # return np.divide(np.abs(np.subtract(self.y_test, Y_pred)), self.y_test).mean()
-            return mape(self.y_test, Y_pred)
         else:
             pass
 
@@ -57,7 +62,7 @@ class Genetic:
                 min_elem = i
         res = np.linalg.solve([[min_elem, 1], [max_elem, 1]], [a, b])
         self.q_list = [res[0] * i + res[1] for i in self.q_list]
-        return fitness_proportionate_selection(optimization_policy=optimization_policy)
+        return self.fitness_proportionate_selection(optimization_policy=optimization_policy)
 
     def tournament_selection(self, optimization_policy="max", number_of_participants=3):
         pass
@@ -107,7 +112,7 @@ class Genetic:
     # mutate methods
     def inverting_bit(self, individual):
         if random.uniform(0, 1) <= self.p_mutations:
-            point = random.randint(0, len(parent_1) - 1)
+            point = random.randint(0, len(individual) - 1)
             if individual[point] == 0:
                 individual[point] = 1
             else:
