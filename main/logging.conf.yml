@@ -1,0 +1,22 @@
+version: 1
+formatters:
+        simple:
+                class: logging.Formatter
+                format: "%(levelname)s: %(message)s"
+handlers:
+        file_handler:
+                class: logging.FileHandler
+                filename: genetic.warn
+                level: WARNING
+                formatter: simple
+        file_handler_log:
+                class: logging.FileHandler
+                filename: genetic.log
+                level: INFO
+                formatter: simple
+loggers:
+        genetic:
+                level: INFO
+                handlers: [file_handler, file_handler_log]
+
+
