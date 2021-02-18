@@ -2,7 +2,7 @@ version: 1
 formatters:
         simple:
                 class: logging.Formatter
-                format: "%(levelname)s: %(message)s"
+                format: "%(message)s"
 handlers:
         file_handler:
                 class: logging.FileHandler
